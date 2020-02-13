@@ -65,17 +65,6 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:enchant_with_levels",
-              "levels": 30,
-              "treasure": true
-            }
-          ],
-          "name": "minecraft:brick"
-        },
-        {
-          "type": "minecraft:item",
           "name": "minecraft:nautilus_shell"
         },
         {
