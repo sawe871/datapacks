@@ -1,0 +1,14 @@
+{
+    "type": "crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "minecraft:salmon"
+        },
+        {
+            "item": "minecraft:water_bucket"
+        }
+    ],
+    "result": {
+            "item": "minecraft:salmon_bucket"
+    }
+}

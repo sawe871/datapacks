@@ -1,0 +1,619 @@
+<h1 id="custom-recipes">Custom Recipes</h1>
+<p><em>Last updated: 18w08a</em></p>
+<hr />
+<h1 id="table-of-contents">Table of contents</h1>
+<h2 id="generic-info">Generic info</h2>
+<p><a name="table-of-contents"/></p>
+<ol type="1">
+<li><a href="#intro">Intro</a></li>
+<li><a href="#structure">JSON structure</a></li>
+<li><a href="#generic-item">Shared: item element</a>
+<ol type="1">
+<li><a href="#generic-item-list">List of objects</a></li>
+</ol></li>
+</ol>
+<h2 id="files">Files</h2>
+<ol start="4" type="1">
+<li><a href="#files-location">Location</a>
+<ol type="1">
+<li><a href="#files-location-namespaces">Namespaces</a></li>
+</ol></li>
+<li><a href="#files-referencing">Referencing</a></li>
+<li><a href="#default-recipes">Replacing default recipes</a>
+<ol type="1">
+<li><a href="https://minecraft.gamepedia.com/Crafting#Complete_recipe_list">List of default recipes</a></li>
+</ol></li>
+<li><a href="#files-editing">Editing</a></li>
+</ol>
+<h2 id="customizing-recipes">Customizing recipes</h2>
+<ol start="8" type="1">
+<li><a href="#type">Type</a></li>
+<li><a href="#groups">Groups</a></li>
+<li><a href="#shaped-crafting">Shaped crafting</a>
+<ol type="1">
+<li><a href="#shaped-patterns">Patterns</a></li>
+<li><a href="#shaped-keys">Keys</a></li>
+</ol></li>
+<li><a href="#shapeless-crafting">Shapeless crafting</a>
+<ol type="1">
+<li><a href="#shapeless-ingredients">Ingredients</a></li>
+</ol></li>
+<li><a href="#smelting">Smelting</a>
+<ol type="1">
+<li><a href="#smelting-ingredient">Ingredient</a></li>
+<li><a href="#smelting-experience">Experience</a></li>
+<li><a href="#smelting-cookingtime">Cooking time</a></li>
+</ol></li>
+<li><a href="#results">Results</a>
+<ol type="1">
+<li><a href="#results-crafting">Crafting results</a></li>
+<li><a href="#results-smelting">Smelting results</a></li>
+</ol></li>
+</ol>
+<h2 id="commands">Commands</h2>
+<ol start="14" type="1">
+<li><a href="#command-recipe">Command: <code>/recipe</code></a></li>
+</ol>
+<h2 id="conclusion">Conclusion</h2>
+<ol start="15" type="1">
+<li><a href="#qa">Q&amp;A</a></li>
+<li><a href="#external-links">External links</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ol>
+<h1 id="generic-info-1">Generic info</h1>
+<h2 id="top-intro"><a href="#table-of-contents"><img src="http://www.skylinerw.com/images/json/icons/top.png" alt="Top" /></a> <a name="intro">Intro</a></h2>
+<p>As of 1.12, recipes have become data-driven via external JSON files. This allows map makers, modders, and server owners to modify and add recipes to their liking.</p>
+<p>Recipes can be shaped or shapeless, producing a specific item. As of 18w08a, only crafting table recipes and smelting recipes are customizable. A new command, <a href="#command-recipe"><code>/recipe</code></a>, has been introduced to supplement the files. Advancements may check if a player <a href="https://github.com/skylinerw/guides/blob/master/java/advancements/triggers.md#recipe_unlocked">unlocked a recipe</a> or they can <a href="https://github.com/skylinerw/guides/blob/master/java/advancements.md#rewards-recipes">grant recipes</a> to players.</p>
+<p>Recipes use the <a href="http://json.org/">JSON format</a> to store the recipe in external files.</p>
+<h2 id="top-json-structure"><a href="#table-of-contents"><img src="http://www.skylinerw.com/images/json/icons/top.png" alt="Top" /></a> <a name="structure">JSON structure</a></h2>
+<p>The following is a list of all possible keys for recipes.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">{</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;crafting_shaped&quot;</span><span class="fu">,</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a>    <span class="dt">&quot;group&quot;</span><span class="fu">:</span> <span class="st">&quot;group name&quot;</span><span class="fu">,</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>    <span class="dt">&quot;pattern&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>        <span class="st">&quot;## &quot;</span><span class="ot">,</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>        <span class="st">&quot;## &quot;</span><span class="ot">,</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a>        <span class="st">&quot;(((&quot;</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a>    <span class="dt">&quot;key&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a>        <span class="dt">&quot;#&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a>            <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:stone&quot;</span><span class="fu">,</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>            <span class="dt">&quot;tag&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:grass&quot;</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a>        <span class="fu">},</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a>        <span class="dt">&quot;(&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a>            <span class="fu">{</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a>                <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:stone&quot;</span><span class="fu">,</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a>                <span class="dt">&quot;tag&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:grass&quot;</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a>            <span class="fu">}</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a>        <span class="ot">]</span></span>
+<span id="cb1-20"><a href="#cb1-20"></a>    <span class="fu">},</span></span>
+<span id="cb1-21"><a href="#cb1-21"></a>    <span class="dt">&quot;ingredients&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb1-22"><a href="#cb1-22"></a>        <span class="fu">{</span></span>
+<span id="cb1-23"><a href="#cb1-23"></a>            <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:stone&quot;</span><span class="fu">,</span></span>
+<span id="cb1-24"><a href="#cb1-24"></a>            <span class="dt">&quot;tag&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:grass&quot;</span></span>
+<span id="cb1-25"><a href="#cb1-25"></a>        <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb1-26"><a href="#cb1-26"></a>        <span class="ot">[</span></span>
+<span id="cb1-27"><a href="#cb1-27"></a>            <span class="fu">{</span></span>
+<span id="cb1-28"><a href="#cb1-28"></a>                <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:stone&quot;</span><span class="fu">,</span></span>
+<span id="cb1-29"><a href="#cb1-29"></a>                <span class="dt">&quot;tag&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:grass&quot;</span></span>
+<span id="cb1-30"><a href="#cb1-30"></a>            <span class="fu">}</span></span>
+<span id="cb1-31"><a href="#cb1-31"></a>        <span class="ot">]</span></span>
+<span id="cb1-32"><a href="#cb1-32"></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb1-33"><a href="#cb1-33"></a>    <span class="dt">&quot;ingredient&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb1-34"><a href="#cb1-34"></a>        <span class="fu">{</span></span>
+<span id="cb1-35"><a href="#cb1-35"></a>            <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:stone&quot;</span><span class="fu">,</span></span>
+<span id="cb1-36"><a href="#cb1-36"></a>            <span class="dt">&quot;tag&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:grass&quot;</span></span>
+<span id="cb1-37"><a href="#cb1-37"></a>        <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb1-38"><a href="#cb1-38"></a>        <span class="ot">[</span></span>
+<span id="cb1-39"><a href="#cb1-39"></a>            <span class="fu">{</span></span>
+<span id="cb1-40"><a href="#cb1-40"></a>                <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:stone&quot;</span><span class="fu">,</span></span>
+<span id="cb1-41"><a href="#cb1-41"></a>                <span class="dt">&quot;tag&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:grass&quot;</span></span>
+<span id="cb1-42"><a href="#cb1-42"></a>            <span class="fu">}</span></span>
+<span id="cb1-43"><a href="#cb1-43"></a>        <span class="ot">]</span></span>
+<span id="cb1-44"><a href="#cb1-44"></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb1-45"><a href="#cb1-45"></a>    <span class="dt">&quot;experience&quot;</span><span class="fu">:</span> <span class="fl">0.0</span><span class="fu">,</span></span>
+<span id="cb1-46"><a href="#cb1-46"></a>    <span class="dt">&quot;cookingtime&quot;</span><span class="fu">:</span> <span class="dv">200</span><span class="fu">,</span></span>
+<span id="cb1-47"><a href="#cb1-47"></a>    <span class="dt">&quot;result&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-48"><a href="#cb1-48"></a>        <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:stone&quot;</span><span class="fu">,</span></span>
+<span id="cb1-49"><a href="#cb1-49"></a>        <span class="dt">&quot;count&quot;</span><span class="fu">:</span> <span class="dv">1</span></span>
+<span id="cb1-50"><a href="#cb1-50"></a>    <span class="fu">},</span></span>
+<span id="cb1-51"><a href="#cb1-51"></a>    <span class="dt">&quot;result&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:stone&quot;</span></span>
+<span id="cb1-52"><a href="#cb1-52"></a><span class="fu">}</span></span></code></pre></div>
+<h2 id="top-shared-item-element"><a href="#table-of-contents"><img src="http://www.skylinerw.com/images/json/icons/top.png" alt="Top" /></a> <a name="generic-item">Shared: item element</a></h2>
+<p>An item element contains a handful of data to either compare with an incoming object or to create an outgoing object. The context of the values may change based on the feature using the item object, and some may not be available depending on that context.</p>
+<p><strong>1. “item”</strong></p>
+<p>The <code>item</code> string specifies a base item ID. <code>item</code> and <code>tag</code> are mutually exclusive. The following either looks for or creates the “minecraft:redstone” item.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1"></a><span class="er">&quot;item_object&quot;:</span> <span class="fu">{</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>    <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:redstone&quot;</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="fu">}</span></span></code></pre></div>
+<p><strong>2. “tag”</strong></p>
+<p>The <code>tag</code> string specifies the resource location to an ID group, minus the designating <code>#</code> character. These groups are a list of item IDs that the incoming item can match any one of. For a list of default item groups, see <a href="https://minecraft.gamepedia.com/Tag#Items">Minecraft Wiki: Tag</a>. Adding custom groups requires the use of <a href="https://minecraft.gamepedia.com/Data_pack">data packs</a>. <code>item</code> and <code>tag</code> are mutually exclusive. This <strong>cannot</strong> be used in a <a href="#results">result</a>. The following looks for any item listed in the “#minecraft:wool” group.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1"></a><span class="er">&quot;item_object&quot;:</span> <span class="fu">{</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>    <span class="dt">&quot;tag&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:wool&quot;</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="fu">}</span></span></code></pre></div>
+<p><strong>3. “count”</strong></p>
+<p>The optional <code>count</code> number specifies the amount of items in the stack, defaulting to 1 when not specified. This <strong>cannot</strong> be used in a <a href="#shaped-keys">key</a>, <a href="#shapeless-ingredients">crafting ingredient</a>, or <a href="#smelting-ingredient">smelting ingredient</a>, only in a <a href="#results-crafting">crafting result</a>. The following creates an item with a stacksize of 16.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb4-1"><a href="#cb4-1"></a><span class="er">&quot;item_object&quot;:</span> <span class="fu">{</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>    <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:stick&quot;</span><span class="fu">,</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a>    <span class="dt">&quot;count&quot;</span><span class="fu">:</span> <span class="dv">16</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="fu">}</span></span></code></pre></div>
+<h2 id="list-of-objects"><a name="generic-item-list">List of objects</a></h2>
+<p>As an alternative to using tag groups, an item element can also be a list of item objects, but <strong>only</strong> for <a href="#shaped-keys">keys</a>, <a href="#shapeless-ingredients">crafting ingredients</a>, or <a href="#smelting-ingredient">smelting ingredients</a> (not any <a href="#results">results</a>). For example, the following will allow an ingredient to either be a stone <strong>or</strong> a stick.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb5-1"><a href="#cb5-1"></a><span class="ot">[</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>    <span class="fu">{</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>        <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:stone&quot;</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>    <span class="fu">{</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a>        <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:stick&quot;</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a>    <span class="fu">}</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="ot">]</span></span></code></pre></div>
+<p>A shaped recipe example, where the items to find will be a stone, and either a stick <strong>or</strong> a white wool.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">{</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;crafting_shaped&quot;</span><span class="fu">,</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>    <span class="dt">&quot;pattern&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>        <span class="st">&quot;%%%&quot;</span><span class="ot">,</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a>        <span class="st">&quot;GGG&quot;</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a>    <span class="dt">&quot;key&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a>        <span class="dt">&quot;%&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a>            <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:stone&quot;</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a>        <span class="fu">},</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a>        <span class="dt">&quot;G&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a>            <span class="fu">{</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a>                <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:stick&quot;</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a>            <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a>            <span class="fu">{</span></span>
+<span id="cb6-16"><a href="#cb6-16"></a>                <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:white_wool&quot;</span></span>
+<span id="cb6-17"><a href="#cb6-17"></a>            <span class="fu">}</span></span>
+<span id="cb6-18"><a href="#cb6-18"></a>        <span class="ot">]</span></span>
+<span id="cb6-19"><a href="#cb6-19"></a>    <span class="fu">},</span></span>
+<span id="cb6-20"><a href="#cb6-20"></a>    <span class="dt">&quot;result&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb6-21"><a href="#cb6-21"></a>        <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:redstone&quot;</span></span>
+<span id="cb6-22"><a href="#cb6-22"></a>    <span class="fu">}</span></span>
+<span id="cb6-23"><a href="#cb6-23"></a><span class="fu">}</span></span></code></pre></div>
+<p>A shapeless recipe example, where the items required must be a stone, and either a stick <strong>or</strong> a white wool.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">{</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;crafting_shapeless&quot;</span><span class="fu">,</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a>    <span class="dt">&quot;ingredients&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>        <span class="fu">{</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>            <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:stone&quot;</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a>        <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a>        <span class="ot">[</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a>            <span class="fu">{</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a>                <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:stick&quot;</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a>            <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb7-11"><a href="#cb7-11"></a>            <span class="fu">{</span></span>
+<span id="cb7-12"><a href="#cb7-12"></a>                <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:white_wool&quot;</span></span>
+<span id="cb7-13"><a href="#cb7-13"></a>            <span class="fu">}</span></span>
+<span id="cb7-14"><a href="#cb7-14"></a>        <span class="ot">]</span></span>
+<span id="cb7-15"><a href="#cb7-15"></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb7-16"><a href="#cb7-16"></a>    <span class="dt">&quot;result&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb7-17"><a href="#cb7-17"></a>        <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:redstone&quot;</span></span>
+<span id="cb7-18"><a href="#cb7-18"></a>    <span class="fu">}</span></span>
+<span id="cb7-19"><a href="#cb7-19"></a><span class="fu">}</span></span></code></pre></div>
+<h1 id="files-1">Files</h1>
+<h2 id="top-file-location"><a href="#table-of-contents"><img src="http://www.skylinerw.com/images/json/icons/top.png" alt="Top" /></a> <a name="files-location">File location</a></h2>
+<p>Recipes are saved as a datapack in the world folder to be distributed with the world itself, inside the <code>/datapacks/</code> folder. Here is an example structure within the world folder, where “New World” is the name of the world folder:</p>
+<p><img src="http://skylinerw.com/images/recipes/recipe_files_1.png" /></p>
+<p>For more information on setting up a data pack (including the creation of the required <code>pack.meta</code> file), see <a href="https://minecraft.gamepedia.com/Data_pack">here</a>.</p>
+<h3 id="namespaces"><a name="files-location-namespaces">Namespaces</a></h3>
+<p>The root folder that you create within the <code>/New World/datapacks/&lt;datapack name&gt;/data/</code> folder will be referred to as the “namespace”. This is what separates collections of recipes, such as for different mods or maps. <strong>File/folder names must all be lowercase to circumvent issues with differing operating system file structures.</strong></p>
+<p>From the image example above, <code>skylinerwrecipes</code>, <code>anothermod</code>, and <code>minecraft</code> are the namespaces.</p>
+<p>The <code>minecraft</code> namespace in particular should <strong>only</strong> be used to overwrite default recipes, such as changing the crafting output. Place any new recipes in a new namespace and <strong>not</strong> within <code>minecraft</code>.</p>
+<h2 id="top-referencing"><a href="#table-of-contents"><img src="http://www.skylinerw.com/images/json/icons/top.png" alt="Top" /></a> <a name="files-referencing">Referencing</a></h2>
+<p>When referencing a recipe, you must follow the following format <strong>excluding the <code>.json</code> extension</strong>:</p>
+<pre><code>[namespace]:[filepath/to/recipe]</code></pre>
+<p>Example, targeting the file <code>/New World/datapacks/&lt;datapack name&gt;/data/anothermod/recipes/stuff/bowl.json</code>:</p>
+<pre><code>anothermod:stuff/bowl</code></pre>
+<p>By excluding the namespace, it will automatically assume it’s meant to be <code>minecraft</code>:</p>
+<pre><code>acacia_button = minecraft:acacia_button</code></pre>
+<h2 id="top-replacing-default-recipes"><a href="#table-of-contents"><img src="http://www.skylinerw.com/images/json/icons/top.png" alt="Top" /></a> <a name="default-recipes">Replacing default recipes</a></h2>
+<p>You can create a recipe within the <code>minecraft</code> namespace with the same name as a default recipe. Anything that uses the default recipe will then use your custom one.</p>
+<p>For example, given the filepath <code>/New World/datapacks/&lt;datapack name&gt;/minecraft/recipes/acacia_button.json</code>, the following recipe will replace the default recipe that creates an acacia button, and instead provides dirt:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">{</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;crafting_shapeless&quot;</span><span class="fu">,</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a>    <span class="dt">&quot;group&quot;</span><span class="fu">:</span> <span class="st">&quot;wooden_button&quot;</span><span class="fu">,</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a>    <span class="dt">&quot;ingredients&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a>        <span class="fu">{</span></span>
+<span id="cb11-6"><a href="#cb11-6"></a>            <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:acacia_planks&quot;</span></span>
+<span id="cb11-7"><a href="#cb11-7"></a>        <span class="fu">}</span></span>
+<span id="cb11-8"><a href="#cb11-8"></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb11-9"><a href="#cb11-9"></a>    <span class="dt">&quot;result&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb11-10"><a href="#cb11-10"></a>        <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:dirt&quot;</span></span>
+<span id="cb11-11"><a href="#cb11-11"></a>    <span class="fu">}</span></span>
+<span id="cb11-12"><a href="#cb11-12"></a><span class="fu">}</span></span></code></pre></div>
+<h2 id="top-editing"><a href="#table-of-contents"><img src="http://www.skylinerw.com/images/json/icons/top.png" alt="Top" /></a> <a name="files-editing">Editing</a></h2>
+<p>You will need to use a UTF-8 compliant text editor when creating and saving recipes that use unicode characters (such as the section symbol). By not encoding in UTF-8, special characters may not be saved correctly and Minecraft may fail to parse the data.</p>
+<p><strong>File/folder names must all be lowercase to circumvent issues with differing operating system file structures.</strong></p>
+<h3 id="windows-notepad">Windows Notepad</h3>
+<p>Windows Notepad is capable of saving as UTF-8, though will default to ANSI. Instructions for saving a <code>.json</code> in UTF-8:</p>
+<ol type="1">
+<li>Click <em>Save</em> or <em>Save As</em>.</li>
+<li>Set <em>“Save as type”</em> to <em>“All files (<em>.</em>)”</em>.</li>
+<li>Name your file and append the name with <code>.json</code>.</li>
+<li>Set <em>“Encoding”</em> to <em>“UTF-8”</em>.</li>
+<li>Save.</li>
+</ol>
+<p>Image example:</p>
+<p><img src="http://skylinerw.com/images/advancements/editing_1.png" /></p>
+<h3 id="notepad">Notepad++</h3>
+<p><a href="https://notepad-plus-plus.org">Notepad++</a> is a great alternative to using plain Notepad. Instructions for saving a <code>.json</code> in UTF-8:</p>
+<ol type="1">
+<li>Change the encoding to either <em>“UTF-8”</em> or <em>“UTF-8 without BOM”</em> under the <em>“Encoding”</em> menu. See image below.</li>
+<li>Click <em>Save</em> or <em>Save As</em>.</li>
+<li>Set <em>“Save as type”</em> to <em>“All files (<em>.</em>)”</em>.</li>
+<li>Name your file and append the name with <code>.json</code>.</li>
+<li>Save.</li>
+</ol>
+<p>Image example:</p>
+<p><img src="http://skylinerw.com/images/advancements/editing_2.png" /></p>
+<h3 id="atom">Atom</h3>
+<p><a href="https://atom.io">Atom</a> has multi-platform support. Instructions for saving a <code>.json</code> in UTF-8:</p>
+<ol type="1">
+<li>Change the encoding to <em>“UTF-8”</em> under the <em>“Select Encoding”</em> menu. See image below.</li>
+<li>Click <em>Save</em> or <em>Save As</em>.</li>
+<li>Set <em>“Save as type”</em> to <em>“All files (<em>.</em>)”</em>.</li>
+<li>Name your file and append the name with <code>.json</code>.</li>
+<li>Save.</li>
+</ol>
+<p>Image example:</p>
+<p><img src="http://skylinerw.com/images/advancements/editing_3.png" /></p>
+<h1 id="customizing-recipes-1">Customizing recipes</h1>
+<h2 id="top-type"><a href="#table-of-contents"><img src="http://www.skylinerw.com/images/json/icons/top.png" alt="Top" /></a> <a name="type">Type</a></h2>
+<p>A recipe <strong>must</strong> have a type of crafting layout, specified in the <code>type</code> string. The value can either be “crafting_shaped” for <a href="#shaped-crafting">shaped crafting</a>, “crafting_shapeless” for <a href="#shapeless-crafting">shapeless crafting</a>, or “smelting” for <a href="#smelting">smelting</a>.</p>
+<p>The following recipe makes use of shaped crafting.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">{</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;crafting_shaped&quot;</span><span class="fu">,</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a>    <span class="dt">&quot;pattern&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a>        <span class="st">&quot;##&quot;</span><span class="ot">,</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a>        <span class="st">&quot;##&quot;</span><span class="ot">,</span></span>
+<span id="cb12-6"><a href="#cb12-6"></a>        <span class="st">&quot;##&quot;</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb12-8"><a href="#cb12-8"></a>    <span class="dt">&quot;key&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb12-9"><a href="#cb12-9"></a>        <span class="dt">&quot;#&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb12-10"><a href="#cb12-10"></a>            <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:redstone&quot;</span></span>
+<span id="cb12-11"><a href="#cb12-11"></a>        <span class="fu">}</span></span>
+<span id="cb12-12"><a href="#cb12-12"></a>    <span class="fu">},</span></span>
+<span id="cb12-13"><a href="#cb12-13"></a>    <span class="dt">&quot;result&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb12-14"><a href="#cb12-14"></a>        <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:stone&quot;</span></span>
+<span id="cb12-15"><a href="#cb12-15"></a>    <span class="fu">}</span></span>
+<span id="cb12-16"><a href="#cb12-16"></a><span class="fu">}</span></span></code></pre></div>
+<p>The following recipe makes use of shapeless crafting.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">{</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;crafting_shapeless&quot;</span><span class="fu">,</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a>    <span class="dt">&quot;ingredients&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a>        <span class="fu">{</span></span>
+<span id="cb13-5"><a href="#cb13-5"></a>            <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:redstone&quot;</span></span>
+<span id="cb13-6"><a href="#cb13-6"></a>        <span class="fu">}</span></span>
+<span id="cb13-7"><a href="#cb13-7"></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb13-8"><a href="#cb13-8"></a>    <span class="dt">&quot;result&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb13-9"><a href="#cb13-9"></a>        <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:stone&quot;</span></span>
+<span id="cb13-10"><a href="#cb13-10"></a>    <span class="fu">}</span></span>
+<span id="cb13-11"><a href="#cb13-11"></a><span class="fu">}</span></span></code></pre></div>
+<p>The following recipe makes use of smelting.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">{</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;smelting&quot;</span><span class="fu">,</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a>    <span class="dt">&quot;ingredient&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb14-4"><a href="#cb14-4"></a>        <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:redstone&quot;</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a>    <span class="fu">},</span></span>
+<span id="cb14-6"><a href="#cb14-6"></a>    <span class="dt">&quot;result&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:stone&quot;</span></span>
+<span id="cb14-7"><a href="#cb14-7"></a><span class="fu">}</span></span></code></pre></div>
+<h2 id="top-groups"><a href="#table-of-contents"><img src="http://www.skylinerw.com/images/json/icons/top.png" alt="Top" /></a> <a name="groups">Groups</a></h2>
+<p>A recipe can optionally have a recipe group it belongs to within the recipe helper interface, specified by the <code>group</code> string. The value of this string can be anything. Any recipes that have the same group name specified will be shown together in the recipe helper. The intention is to keep similar items within the same category, such as all boats:</p>
+<figure>
+<img src="http://skylinerw.com/images/recipes/recipe_group.png" alt="" /><figcaption>Recipe book group</figcaption>
+</figure>
+<p>The following recipes belong to a group called “stuff” and will be grouped together in the recipe helper interface:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">{</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a>    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;crafting_shapeless&quot;</span><span class="fu">,</span></span>
+<span id="cb15-3"><a href="#cb15-3"></a>    <span class="dt">&quot;group&quot;</span><span class="fu">:</span> <span class="st">&quot;stuff&quot;</span><span class="fu">,</span></span>
+<span id="cb15-4"><a href="#cb15-4"></a>    <span class="dt">&quot;ingredients&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb15-5"><a href="#cb15-5"></a>        <span class="fu">{</span></span>
+<span id="cb15-6"><a href="#cb15-6"></a>            <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:sand&quot;</span></span>
+<span id="cb15-7"><a href="#cb15-7"></a>        <span class="fu">}</span></span>
+<span id="cb15-8"><a href="#cb15-8"></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb15-9"><a href="#cb15-9"></a>    <span class="dt">&quot;result&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb15-10"><a href="#cb15-10"></a>        <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:diamond&quot;</span></span>
+<span id="cb15-11"><a href="#cb15-11"></a>    <span class="fu">}</span></span>
+<span id="cb15-12"><a href="#cb15-12"></a><span class="fu">}</span></span>
+<span id="cb15-13"><a href="#cb15-13"></a></span>
+<span id="cb15-14"><a href="#cb15-14"></a><span class="fu">{</span></span>
+<span id="cb15-15"><a href="#cb15-15"></a>    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;crafting_shapeless&quot;</span><span class="fu">,</span></span>
+<span id="cb15-16"><a href="#cb15-16"></a>    <span class="dt">&quot;group&quot;</span><span class="fu">:</span> <span class="st">&quot;stuff&quot;</span><span class="fu">,</span></span>
+<span id="cb15-17"><a href="#cb15-17"></a>    <span class="dt">&quot;ingredients&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb15-18"><a href="#cb15-18"></a>        <span class="fu">{</span></span>
+<span id="cb15-19"><a href="#cb15-19"></a>            <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:dirt&quot;</span></span>
+<span id="cb15-20"><a href="#cb15-20"></a>        <span class="fu">}</span></span>
+<span id="cb15-21"><a href="#cb15-21"></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb15-22"><a href="#cb15-22"></a>    <span class="dt">&quot;result&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb15-23"><a href="#cb15-23"></a>        <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:diamond&quot;</span></span>
+<span id="cb15-24"><a href="#cb15-24"></a>    <span class="fu">}</span></span>
+<span id="cb15-25"><a href="#cb15-25"></a><span class="fu">}</span></span></code></pre></div>
+<h2 id="top-shaped-crafting"><a href="#table-of-contents"><img src="http://www.skylinerw.com/images/json/icons/top.png" alt="Top" /></a> <a name="shaped-crafting">Shaped crafting</a></h2>
+<p>Shaped crafting involves placing items into the crafting window in a specific order. A <a href="#shaped-patterns">pattern</a> specifies the slots that items must appear in using arbitrary placeholder characters, while <a href="#shaped-keys">keys</a> define what items those placeholders are looking for. Patterns and keys are both required with shaped recipes.</p>
+<p>The following sets two placeholders in the pattern, being “#” and “^”, while the keys define “#” as redstone dust and “^” as an iron block.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">{</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a>    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;crafting_shaped&quot;</span><span class="fu">,</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a>    <span class="dt">&quot;pattern&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb16-4"><a href="#cb16-4"></a>        <span class="st">&quot;###&quot;</span><span class="ot">,</span></span>
+<span id="cb16-5"><a href="#cb16-5"></a>        <span class="st">&quot;^^^&quot;</span><span class="ot">,</span></span>
+<span id="cb16-6"><a href="#cb16-6"></a>        <span class="st">&quot;###&quot;</span></span>
+<span id="cb16-7"><a href="#cb16-7"></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb16-8"><a href="#cb16-8"></a>    <span class="dt">&quot;key&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb16-9"><a href="#cb16-9"></a>        <span class="dt">&quot;#&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb16-10"><a href="#cb16-10"></a>            <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:redstone&quot;</span></span>
+<span id="cb16-11"><a href="#cb16-11"></a>        <span class="fu">},</span></span>
+<span id="cb16-12"><a href="#cb16-12"></a>        <span class="dt">&quot;^&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb16-13"><a href="#cb16-13"></a>            <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:iron_block&quot;</span></span>
+<span id="cb16-14"><a href="#cb16-14"></a>        <span class="fu">}</span></span>
+<span id="cb16-15"><a href="#cb16-15"></a>    <span class="fu">},</span></span>
+<span id="cb16-16"><a href="#cb16-16"></a>    <span class="dt">&quot;result&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb16-17"><a href="#cb16-17"></a>        <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:gold_block&quot;</span></span>
+<span id="cb16-18"><a href="#cb16-18"></a>    <span class="fu">}</span></span>
+<span id="cb16-19"><a href="#cb16-19"></a><span class="fu">}</span></span></code></pre></div>
+<p>Image example of how it is used in the crafting window:</p>
+<p><img src="http://skylinerw.com/images/recipes/recipe_shaped.png" /></p>
+<h3 id="top-patterns"><a href="#table-of-contents"><img src="http://www.skylinerw.com/images/json/icons/top.png" alt="Top" /></a> <a name="shaped-patterns">Patterns</a></h3>
+<p>A pattern <strong>must</strong> be specified via the <code>pattern</code> list. The list must contain between 1 and 3 strings, with each string representing a row in the crafting grid. Within each string there must be between 1 and 3 placeholder characters of your choosing, with each character representing a column. A space character indicates an empty slot in the crafting window, where no items are allowed to appear. The shape will automatically adapt to larger crafting grids, such that a 2x2 recipe will work in any corner of a 3x3 crafting grid.</p>
+<p>For example, the following pattern uses only 1 row and all 3 columns, with an empty slot between the two items:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb17-1"><a href="#cb17-1"></a><span class="er">&quot;pattern&quot;:</span> <span class="ot">[</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a>    <span class="st">&quot;# #&quot;</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="ot">]</span></span></code></pre></div>
+<p>Which could look like any of the following in the crafting window:</p>
+<p><img src="http://skylinerw.com/images/recipes/recipe_pattern_1.png" /></p>
+<p>All strings must contain the same number of characters. The following pattern is <strong>invalid</strong> due to the uneven rows.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb18-1"><a href="#cb18-1"></a><span class="er">&quot;pattern&quot;:</span> <span class="ot">[</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a>    <span class="st">&quot;##&quot;</span><span class="ot">,</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a>    <span class="st">&quot;#&quot;</span></span>
+<span id="cb18-4"><a href="#cb18-4"></a><span class="ot">]</span></span></code></pre></div>
+<p>The fix would be to specify an empty slot where the rows are uneven.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb19-1"><a href="#cb19-1"></a><span class="er">&quot;pattern&quot;:</span> <span class="ot">[</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a>    <span class="st">&quot;##&quot;</span><span class="ot">,</span></span>
+<span id="cb19-3"><a href="#cb19-3"></a>    <span class="st">&quot;# &quot;</span></span>
+<span id="cb19-4"><a href="#cb19-4"></a><span class="ot">]</span></span></code></pre></div>
+<p>The fixed pattern could look like any of the following in the crafting window:</p>
+<p><img src="http://skylinerw.com/images/recipes/recipe_pattern_2.png" /></p>
+<hr />
+<p>A pattern can have up to 9 unique placeholder characters. These characters can be anything (except the reserved space character), provided there is a corresponding <a href="#shaped-keys">key</a> to go with them, although that doesn’t mean that the items defined by those keys have to be unique. The following recipe makes use of 9 placeholders.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb20-1"><a href="#cb20-1"></a><span class="er">&quot;pattern&quot;:</span> <span class="ot">[</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a>    <span class="st">&quot;!@#&quot;</span><span class="ot">,</span></span>
+<span id="cb20-3"><a href="#cb20-3"></a>    <span class="st">&quot;$%^&quot;</span><span class="ot">,</span></span>
+<span id="cb20-4"><a href="#cb20-4"></a>    <span class="st">&quot;&amp;*(&quot;</span></span>
+<span id="cb20-5"><a href="#cb20-5"></a><span class="ot">]</span></span></code></pre></div>
+<p>You can also use a single row and column to create a recipe where the item may be placed anywhere in the crafting grid, although you should use <a href="#shapeless-crafting">shapeless crafting</a> instead as it is for unordered recipes.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb21-1"><a href="#cb21-1"></a><span class="er">&quot;pattern&quot;:</span> <span class="ot">[</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a>    <span class="st">&quot;#&quot;</span></span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="ot">]</span></span></code></pre></div>
+<p>Which could look like the following in the crafting window:</p>
+<p><img src="http://skylinerw.com/images/recipes/recipe_ingredients_4.png" /></p>
+<h3 id="top-keys"><a href="#table-of-contents"><img src="http://www.skylinerw.com/images/json/icons/top.png" alt="Top" /></a> <a name="shaped-keys">Keys</a></h3>
+<p>A set of keys <strong>must</strong> be specified via the <code>key</code> object. This object contains multiple <a href="#generic-item">item elements</a>, whose key names must be equal to the unique characters specified in the <a href="#shaped-patterns">pattern</a>. The key name can only be 1 character long and cannot be the reserved space character.</p>
+<p>The following pattern set uses “H” and “?” as the placeholders, while the key defines what items those placeholders will be. The “H” represents a lever, while the “?” represents a bone.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb22-1"><a href="#cb22-1"></a><span class="er">&quot;pattern&quot;:</span> <span class="ot">[</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a>    <span class="st">&quot;H?H&quot;</span><span class="ot">,</span></span>
+<span id="cb22-3"><a href="#cb22-3"></a>    <span class="st">&quot;?H?&quot;</span><span class="ot">,</span></span>
+<span id="cb22-4"><a href="#cb22-4"></a>    <span class="st">&quot;H?H&quot;</span></span>
+<span id="cb22-5"><a href="#cb22-5"></a><span class="ot">]</span><span class="er">,</span></span>
+<span id="cb22-6"><a href="#cb22-6"></a><span class="er">&quot;key&quot;:</span> <span class="fu">{</span></span>
+<span id="cb22-7"><a href="#cb22-7"></a>    <span class="dt">&quot;H&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb22-8"><a href="#cb22-8"></a>        <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:lever&quot;</span></span>
+<span id="cb22-9"><a href="#cb22-9"></a>    <span class="fu">},</span></span>
+<span id="cb22-10"><a href="#cb22-10"></a>    <span class="dt">&quot;?&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb22-11"><a href="#cb22-11"></a>        <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:bone&quot;</span></span>
+<span id="cb22-12"><a href="#cb22-12"></a>    <span class="fu">}</span></span>
+<span id="cb22-13"><a href="#cb22-13"></a><span class="fu">}</span></span></code></pre></div>
+<p>Which would look like the following in the crafting window:</p>
+<p><img src="http://skylinerw.com/images/recipes/recipe_key_1.png" /></p>
+<h2 id="top-shapeless-crafting"><a href="#table-of-contents"><img src="http://www.skylinerw.com/images/json/icons/top.png" alt="Top" /></a> <a name="shapeless-crafting">Shapeless crafting</a></h2>
+<p>Shapeless crafting involves placing items anywhere into the crafting window in no particular order. A list of <a href="#shapeless-ingredients">ingredients</a> specifies the items that make up the recipe, which is required for shapeless recipes.</p>
+<p>The following recipe will allow placing a diamond and a nether star anywhere in the crafting grid to receive a stick in return.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">{</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a>    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;crafting_shapeless&quot;</span><span class="fu">,</span></span>
+<span id="cb23-3"><a href="#cb23-3"></a>    <span class="dt">&quot;ingredients&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb23-4"><a href="#cb23-4"></a>        <span class="fu">{</span></span>
+<span id="cb23-5"><a href="#cb23-5"></a>            <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:diamond&quot;</span></span>
+<span id="cb23-6"><a href="#cb23-6"></a>        <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb23-7"><a href="#cb23-7"></a>        <span class="fu">{</span></span>
+<span id="cb23-8"><a href="#cb23-8"></a>            <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:nether_star&quot;</span></span>
+<span id="cb23-9"><a href="#cb23-9"></a>        <span class="fu">}</span></span>
+<span id="cb23-10"><a href="#cb23-10"></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb23-11"><a href="#cb23-11"></a>    <span class="dt">&quot;result&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb23-12"><a href="#cb23-12"></a>        <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:stick&quot;</span></span>
+<span id="cb23-13"><a href="#cb23-13"></a>    <span class="fu">}</span></span>
+<span id="cb23-14"><a href="#cb23-14"></a><span class="fu">}</span></span></code></pre></div>
+<p>Image example of how it is used in the crafting window:</p>
+<p><img src="http://skylinerw.com/images/recipes/recipe_shapeless.png" /></p>
+<h3 id="top-ingredients"><a href="#table-of-contents"><img src="http://www.skylinerw.com/images/json/icons/top.png" alt="Top" /></a> <a name="shapeless-ingredients">Ingredients</a></h3>
+<p>A set of required items <strong>must</strong> be specified via the <code>ingredients</code> list. This list contains <a href="#generic-item">item elements</a>; if the player does not provide all items in this list, the recipe will not work. There can only be 9 items elements listed at the root of the <code>ingredients</code> list.</p>
+<p>The following will only work if the player provides all 5 items, which also means they cannot use the standard inventory crafting grid (2x2) to craft the item as there is not enough room.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb24-1"><a href="#cb24-1"></a><span class="er">&quot;ingredients&quot;:</span> <span class="ot">[</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a>    <span class="fu">{</span></span>
+<span id="cb24-3"><a href="#cb24-3"></a>        <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:redstone&quot;</span></span>
+<span id="cb24-4"><a href="#cb24-4"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb24-5"><a href="#cb24-5"></a>    <span class="fu">{</span></span>
+<span id="cb24-6"><a href="#cb24-6"></a>        <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:diamond&quot;</span></span>
+<span id="cb24-7"><a href="#cb24-7"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb24-8"><a href="#cb24-8"></a>    <span class="fu">{</span></span>
+<span id="cb24-9"><a href="#cb24-9"></a>        <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:iron_block&quot;</span></span>
+<span id="cb24-10"><a href="#cb24-10"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb24-11"><a href="#cb24-11"></a>    <span class="fu">{</span></span>
+<span id="cb24-12"><a href="#cb24-12"></a>        <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:gold_block&quot;</span></span>
+<span id="cb24-13"><a href="#cb24-13"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb24-14"><a href="#cb24-14"></a>    <span class="fu">{</span></span>
+<span id="cb24-15"><a href="#cb24-15"></a>        <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:diamond_block&quot;</span></span>
+<span id="cb24-16"><a href="#cb24-16"></a>    <span class="fu">}</span></span>
+<span id="cb24-17"><a href="#cb24-17"></a><span class="ot">]</span></span></code></pre></div>
+<p>Which could look like the following in the crafting window, plus many more combinations:</p>
+<p><img src="http://skylinerw.com/images/recipes/recipe_ingredients_1.png" /></p>
+<p>You can use the same item multiple times, in which the player must provide all instances of that item.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb25-1"><a href="#cb25-1"></a><span class="er">&quot;ingredients&quot;:</span> <span class="ot">[</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a>    <span class="fu">{</span></span>
+<span id="cb25-3"><a href="#cb25-3"></a>        <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:golden_carrot&quot;</span></span>
+<span id="cb25-4"><a href="#cb25-4"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb25-5"><a href="#cb25-5"></a>    <span class="fu">{</span></span>
+<span id="cb25-6"><a href="#cb25-6"></a>        <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:golden_carrot&quot;</span></span>
+<span id="cb25-7"><a href="#cb25-7"></a>    <span class="fu">}</span></span>
+<span id="cb25-8"><a href="#cb25-8"></a><span class="ot">]</span></span></code></pre></div>
+<p>Which could look like the following in the crafting window:</p>
+<p><img src="http://skylinerw.com/images/recipes/recipe_ingredients_3.png" /></p>
+<p>You can also require just a single item, and that item can be placed anywhere in the crafting window.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb26-1"><a href="#cb26-1"></a><span class="er">&quot;ingredients&quot;:</span> <span class="ot">[</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a>    <span class="fu">{</span></span>
+<span id="cb26-3"><a href="#cb26-3"></a>        <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:torch&quot;</span></span>
+<span id="cb26-4"><a href="#cb26-4"></a>    <span class="fu">}</span></span>
+<span id="cb26-5"><a href="#cb26-5"></a><span class="ot">]</span></span></code></pre></div>
+<p>Which could look like the following in the crafting window:</p>
+<p><img src="http://skylinerw.com/images/recipes/recipe_ingredients_4.png" /></p>
+<h2 id="top-smelting"><a href="#table-of-contents"><img src="http://www.skylinerw.com/images/json/icons/top.png" alt="Top" /></a> <a name="smelting">Smelting</a></h2>
+<p>Smelting involves placing an item into a furnace to smelt into a different item. The recipe takes an <a href="#smelting-ingredient">ingredient</a> to produce a singular <a href="#results-smelting">result</a>. An optional <a href="#smelting-experience">experience reward</a> and <a href="#smelting-cookingtime">cook time</a> may be defined.</p>
+<p>The following recipe will turn a piece of dirt into a diamond, providing an approximated 40% chance of 1 experience per item cooked and cooking each item in 20 ticks (1 second).</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">{</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a>    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;smelting&quot;</span><span class="fu">,</span></span>
+<span id="cb27-3"><a href="#cb27-3"></a>    <span class="dt">&quot;ingredient&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb27-4"><a href="#cb27-4"></a>        <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:dirt&quot;</span></span>
+<span id="cb27-5"><a href="#cb27-5"></a>    <span class="fu">},</span></span>
+<span id="cb27-6"><a href="#cb27-6"></a>    <span class="dt">&quot;result&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:diamond&quot;</span><span class="fu">,</span></span>
+<span id="cb27-7"><a href="#cb27-7"></a>    <span class="dt">&quot;experience&quot;</span><span class="fu">:</span> <span class="fl">0.4</span><span class="fu">,</span></span>
+<span id="cb27-8"><a href="#cb27-8"></a>    <span class="dt">&quot;cookingtime&quot;</span><span class="fu">:</span> <span class="dv">20</span></span>
+<span id="cb27-9"><a href="#cb27-9"></a><span class="fu">}</span></span></code></pre></div>
+<h3 id="top-ingredient"><a href="#table-of-contents"><img src="http://www.skylinerw.com/images/json/icons/top.png" alt="Top" /></a> <a name="smelting-ingredient">Ingredient</a></h3>
+<p>A single required item <strong>must</strong> be specified via the <code>ingredient</code> <a href="#generic-item">item element</a>.</p>
+<p>The following will allow the player to smelt either dirt or grass into diamond, or anything from the “minecraft:wool” tag group.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">{</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a>    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;smelting&quot;</span><span class="fu">,</span></span>
+<span id="cb28-3"><a href="#cb28-3"></a>    <span class="dt">&quot;ingredient&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb28-4"><a href="#cb28-4"></a>        <span class="fu">{</span></span>
+<span id="cb28-5"><a href="#cb28-5"></a>            <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:dirt&quot;</span></span>
+<span id="cb28-6"><a href="#cb28-6"></a>        <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb28-7"><a href="#cb28-7"></a>        <span class="fu">{</span></span>
+<span id="cb28-8"><a href="#cb28-8"></a>            <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:grass&quot;</span></span>
+<span id="cb28-9"><a href="#cb28-9"></a>        <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb28-10"><a href="#cb28-10"></a>        <span class="fu">{</span></span>
+<span id="cb28-11"><a href="#cb28-11"></a>            <span class="dt">&quot;tag&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:wool&quot;</span></span>
+<span id="cb28-12"><a href="#cb28-12"></a>        <span class="fu">}</span></span>
+<span id="cb28-13"><a href="#cb28-13"></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb28-14"><a href="#cb28-14"></a>    <span class="dt">&quot;result&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:diamond&quot;</span></span>
+<span id="cb28-15"><a href="#cb28-15"></a><span class="fu">}</span></span></code></pre></div>
+<p>Or to simply select one item, you would define the item element as an object.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">{</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a>    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;smelting&quot;</span><span class="fu">,</span></span>
+<span id="cb29-3"><a href="#cb29-3"></a>    <span class="dt">&quot;ingredient&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb29-4"><a href="#cb29-4"></a>        <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:dirt&quot;</span></span>
+<span id="cb29-5"><a href="#cb29-5"></a>    <span class="fu">},</span></span>
+<span id="cb29-6"><a href="#cb29-6"></a>    <span class="dt">&quot;result&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:diamond&quot;</span></span>
+<span id="cb29-7"><a href="#cb29-7"></a><span class="fu">}</span></span></code></pre></div>
+<h3 id="top-experience"><a href="#table-of-contents"><img src="http://www.skylinerw.com/images/json/icons/top.png" alt="Top" /></a> <a name="smelting-experience">Experience</a></h3>
+<p><strong>Note: a bug currently causes the modifier to be based on the item currently in the smelting slot rather than the output slot: <a href="https://bugs.mojang.com/browse/MC-125961">MC-125961</a></strong></p>
+<p>An optional <code>experience</code> float <strong>modifies</strong> rate that experience will be provided for smelting, being a value between 0.0 and 1.0 (with 1.0 signifying a 100% experience rate). When not specified, defaults to 0.0. The rate of experience provided will be based on <code>rate = modifier * items removed from furnace</code>, where “modifier” is the value from <code>experience</code>. If the result is not a whole number, there is a <code>rate - floor(rate)</code> chance that the experience given will be <code>ceil(rate)</code>, otherwise the experience given is <code>floor(rate)</code>.</p>
+<p>For example, if 27 items were removed from the furnace while <code>experience</code> set to 0.25, the resulting experience rate is <code>0.25 * 27 = 6.75</code>. As this is not a whole number, there is a 75% chance (<code>6.75 - 6.0 = 0.75</code>) to round up and provide 7 experience points, otherwise it will simply be floored to 6 experience points.</p>
+<p>This can be represented logically as:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb30-1"><a href="#cb30-1"></a><span class="dt">float</span> modifier = <span class="fl">0.</span><span class="dv">25</span>; <span class="co">// The specified &quot;experience&quot; value.</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a><span class="dt">int</span> itemsRemoved = <span class="dv">27</span>; <span class="co">// The number of items removed from the furnace output slot.</span></span>
+<span id="cb30-3"><a href="#cb30-3"></a><span class="dt">int</span> experienceProvided = itemsRemoved; <span class="co">// Experience provided is based on items removed.</span></span>
+<span id="cb30-4"><a href="#cb30-4"></a></span>
+<span id="cb30-5"><a href="#cb30-5"></a><span class="co">// If &quot;experience&quot; is specified as greater than 0 and less than 1...</span></span>
+<span id="cb30-6"><a href="#cb30-6"></a></span>
+<span id="cb30-7"><a href="#cb30-7"></a><span class="kw">if</span> (modifier &gt; <span class="fl">0.</span><span class="dv">0</span> &amp;&amp; modifier &lt; <span class="fl">1.</span><span class="dv">0</span>) {</span>
+<span id="cb30-8"><a href="#cb30-8"></a></span>
+<span id="cb30-9"><a href="#cb30-9"></a>    <span class="dt">float</span> rate = modifier * itemsRemoved; <span class="co">// Result: 6.75</span></span>
+<span id="cb30-10"><a href="#cb30-10"></a>    experienceProvided = <span class="fu">floor</span>(rate); <span class="co">// Result: 6.0</span></span>
+<span id="cb30-11"><a href="#cb30-11"></a></span>
+<span id="cb30-12"><a href="#cb30-12"></a>    <span class="co">// If the rate is not whole (6.0 != 6.75), and with a 75% chance to continue...</span></span>
+<span id="cb30-13"><a href="#cb30-13"></a></span>
+<span id="cb30-14"><a href="#cb30-14"></a>    <span class="kw">if</span> (experienceProvided != rate &amp;&amp; <span class="bu">Math</span>.<span class="fu">random</span>() &lt; rate - experienceProvided) {</span>
+<span id="cb30-15"><a href="#cb30-15"></a>        </span>
+<span id="cb30-16"><a href="#cb30-16"></a>        <span class="co">// Experience provided will instead be the floored rate plus one.</span></span>
+<span id="cb30-17"><a href="#cb30-17"></a>        </span>
+<span id="cb30-18"><a href="#cb30-18"></a>        experienceProvided = <span class="fu">ceil</span>(rate); <span class="co">// Result: 7.0</span></span>
+<span id="cb30-19"><a href="#cb30-19"></a>    }</span>
+<span id="cb30-20"><a href="#cb30-20"></a>}</span>
+<span id="cb30-21"><a href="#cb30-21"></a></span>
+<span id="cb30-22"><a href="#cb30-22"></a><span class="co">// Return experience, being one of the following depending on initial values: itemsRemoved, floor(rate), or ceil(rate).</span></span>
+<span id="cb30-23"><a href="#cb30-23"></a></span>
+<span id="cb30-24"><a href="#cb30-24"></a><span class="kw">return</span> experienceProvided;</span></code></pre></div>
+<p>As another example, if <code>experience</code> is set to 1.0 (100% experience rate) and 50 items were removed, then the player receives 50 experience points.</p>
+<p>As for a recipe example, where the rate modifier is set to 0.5 (i.e. the experience provided will be equal to roughly half of the number of items removed from the output slot of the furnace):</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">{</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a>    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;smelting&quot;</span><span class="fu">,</span></span>
+<span id="cb31-3"><a href="#cb31-3"></a>    <span class="dt">&quot;ingredient&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb31-4"><a href="#cb31-4"></a>        <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:dirt&quot;</span></span>
+<span id="cb31-5"><a href="#cb31-5"></a>    <span class="fu">},</span></span>
+<span id="cb31-6"><a href="#cb31-6"></a>    <span class="dt">&quot;result&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:diamond&quot;</span><span class="fu">,</span></span>
+<span id="cb31-7"><a href="#cb31-7"></a>    <span class="dt">&quot;experience&quot;</span><span class="fu">:</span> <span class="fl">0.5</span></span>
+<span id="cb31-8"><a href="#cb31-8"></a><span class="fu">}</span></span></code></pre></div>
+<h3 id="top-cooking-time"><a href="#table-of-contents"><img src="http://www.skylinerw.com/images/json/icons/top.png" alt="Top" /></a> <a name="smelting-cookingtime">Cooking time</a></h3>
+<p>The length of time (in ticks) that it takes to smelt an item can be specified with the <code>cookingtime</code> integer. When not specified, defaults to 200.</p>
+<p>The following will smelt an item in 10 ticks (0.5 seconds).</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">{</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a>    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;smelting&quot;</span><span class="fu">,</span></span>
+<span id="cb32-3"><a href="#cb32-3"></a>    <span class="dt">&quot;ingredient&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb32-4"><a href="#cb32-4"></a>        <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:stone&quot;</span></span>
+<span id="cb32-5"><a href="#cb32-5"></a>    <span class="fu">},</span></span>
+<span id="cb32-6"><a href="#cb32-6"></a>    <span class="dt">&quot;result&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:grass&quot;</span><span class="fu">,</span></span>
+<span id="cb32-7"><a href="#cb32-7"></a>    <span class="dt">&quot;cookingtime&quot;</span><span class="fu">:</span> <span class="dv">20</span></span>
+<span id="cb32-8"><a href="#cb32-8"></a><span class="fu">}</span></span></code></pre></div>
+<h2 id="top-results"><a href="#table-of-contents"><img src="http://www.skylinerw.com/images/json/icons/top.png" alt="Top" /></a> <a name="results">Results</a></h2>
+<h3 id="top-crafting-results"><a href="#table-of-contents"><img src="http://www.skylinerw.com/images/json/icons/top.png" alt="Top" /></a> <a name="results-crafting">Crafting results</a></h3>
+<p>A crafting recipe <strong>must</strong> have a resulting item that is crafted, specified in the <code>result</code> <a href="#generic-item">item element</a>.</p>
+<p>For example, if the following shaped recipe is fulfilled, the player will receive a new anvil.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">{</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a>    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;crafting_shaped&quot;</span><span class="fu">,</span></span>
+<span id="cb33-3"><a href="#cb33-3"></a>    <span class="dt">&quot;pattern&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb33-4"><a href="#cb33-4"></a>        <span class="st">&quot;#%#&quot;</span><span class="ot">,</span></span>
+<span id="cb33-5"><a href="#cb33-5"></a>        <span class="st">&quot; # &quot;</span></span>
+<span id="cb33-6"><a href="#cb33-6"></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb33-7"><a href="#cb33-7"></a>    <span class="dt">&quot;key&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb33-8"><a href="#cb33-8"></a>        <span class="dt">&quot;%&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb33-9"><a href="#cb33-9"></a>            <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:damaged_anvil&quot;</span></span>
+<span id="cb33-10"><a href="#cb33-10"></a>        <span class="fu">},</span></span>
+<span id="cb33-11"><a href="#cb33-11"></a>        <span class="dt">&quot;#&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb33-12"><a href="#cb33-12"></a>            <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:iron_ingot&quot;</span></span>
+<span id="cb33-13"><a href="#cb33-13"></a>        <span class="fu">}</span></span>
+<span id="cb33-14"><a href="#cb33-14"></a>    <span class="fu">},</span></span>
+<span id="cb33-15"><a href="#cb33-15"></a>    <span class="dt">&quot;result&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb33-16"><a href="#cb33-16"></a>        <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:anvil&quot;</span></span>
+<span id="cb33-17"><a href="#cb33-17"></a>    <span class="fu">}</span></span>
+<span id="cb33-18"><a href="#cb33-18"></a><span class="fu">}</span></span></code></pre></div>
+<p><img src="http://skylinerw.com/images/recipes/recipe_result_1.png" /></p>
+<p>Unlike in <code>key</code> and <code>ingredients</code> item elements, the <code>count</code> key may be specified in <code>result</code> to provide the player with multiple items. The following shapeless recipe will create 4 sticks when the recipe is fulfilled.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">{</span></span>
+<span id="cb34-2"><a href="#cb34-2"></a>    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;crafting_shapeless&quot;</span><span class="fu">,</span></span>
+<span id="cb34-3"><a href="#cb34-3"></a>    <span class="dt">&quot;ingredients&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb34-4"><a href="#cb34-4"></a>        <span class="fu">{</span></span>
+<span id="cb34-5"><a href="#cb34-5"></a>            <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:flint&quot;</span></span>
+<span id="cb34-6"><a href="#cb34-6"></a>        <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb34-7"><a href="#cb34-7"></a>        <span class="fu">{</span></span>
+<span id="cb34-8"><a href="#cb34-8"></a>            <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:wheat_seeds&quot;</span></span>
+<span id="cb34-9"><a href="#cb34-9"></a>        <span class="fu">}</span></span>
+<span id="cb34-10"><a href="#cb34-10"></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb34-11"><a href="#cb34-11"></a>    <span class="dt">&quot;result&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb34-12"><a href="#cb34-12"></a>        <span class="dt">&quot;item&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:stick&quot;</span><span class="fu">,</span></span>
+<span id="cb34-13"><a href="#cb34-13"></a>        <span class="dt">&quot;count&quot;</span><span class="fu">:</span> <span class="dv">4</span></span>
+<span id="cb34-14"><a href="#cb34-14"></a>    <span class="fu">}</span></span>
+<span id="cb34-15"><a href="#cb34-15"></a><span class="fu">}</span></span></code></pre></div>
+<p><img src="http://skylinerw.com/images/recipes/recipe_result_2.png" /></p>
+<h3 id="top-smelting-results"><a href="#table-of-contents"><img src="http://www.skylinerw.com/images/json/icons/top.png" alt="Top" /></a> <a name="results-smelting">Smelting results</a></h3>
+<p>A smelting recipe <strong>must</strong> have a resulting item, specified as an item ID in the <code>result</code> string.</p>
+<p>For example, if the following smelting recipe will provide glass when any block in the “minecraft:wool” tag group is smelted.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb35-1"><a href="#cb35-1"></a><span class="fu">{</span></span>
+<span id="cb35-2"><a href="#cb35-2"></a>    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;smelting&quot;</span><span class="fu">,</span></span>
+<span id="cb35-3"><a href="#cb35-3"></a>    <span class="dt">&quot;ingredient&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb35-4"><a href="#cb35-4"></a>        <span class="dt">&quot;tag&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:wool&quot;</span></span>
+<span id="cb35-5"><a href="#cb35-5"></a>    <span class="fu">},</span></span>
+<span id="cb35-6"><a href="#cb35-6"></a>    <span class="dt">&quot;result&quot;</span><span class="fu">:</span> <span class="st">&quot;minecraft:glass&quot;</span></span>
+<span id="cb35-7"><a href="#cb35-7"></a><span class="fu">}</span></span></code></pre></div>
+<h1 id="commands-1">Commands</h1>
+<h2 id="top-command-recipe"><a href="#table-of-contents"><img src="http://www.skylinerw.com/images/json/icons/top.png" alt="Top" /></a> <a name="command-recipe">Command: /recipe</a></h2>
+<p><em>Coming soon…</em></p>
+<h1 id="conclusion-1">Conclusion</h1>
+<h2 id="top-qa"><a href="#table-of-contents"><img src="http://www.skylinerw.com/images/json/icons/top.png" alt="Top" /></a> <a name="qa">Q&amp;A</a></h2>
+<blockquote>
+<p>Could custom recipes be implemented prior to 1.13?</p>
+</blockquote>
+<p>Not without modifying the JAR.</p>
+<h2 id="top-external-links"><a href="#table-of-contents"><img src="http://www.skylinerw.com/images/json/icons/top.png" alt="Top" /></a> <a name="external-links">External links</a></h2>
+<ul>
+<li><a href="http://jsonlint.com">Generic JSON validator</a></li>
+</ul>
+<h2 id="top-conclusion"><a href="#table-of-contents"><img src="http://www.skylinerw.com/images/json/icons/top.png" alt="Top" /></a> <a name="conclusion">Conclusion</a></h2>
+<p>If there is information that needs to be added, corrected, or clarified, please create a new issue!</p>
